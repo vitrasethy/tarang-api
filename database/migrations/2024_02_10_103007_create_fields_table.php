@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('fields', function (Blueprint $table) {
             $table->id();
-            $table->string('field_name');
+            $table->string('name');
             $table->string('photo_url')->nullable();
             $table->timestamps();
         });
