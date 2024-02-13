@@ -7,19 +7,22 @@ use App\Http\Requests\Auth\LoginRequest;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Auth;
+use \Illuminate\Http\JsonResponse;
 
 class AuthenticatedSessionController extends Controller
 {
     /**
      * Handle an incoming authentication request.
      */
-    public function store(LoginRequest $request): Response
+    public function store(LoginRequest $request): JsonResponse
     {
         $request->authenticate();
 
-        $request->session()->regenerate();
+        $token = $request->user()->createToken('token-name', ['*'], now()->addWeek());
 
-        return response()->noContent();
+        return response()->json([
+            'token' => $token->plainTextToken
+        ]);
     }
 
     /**
@@ -27,12 +30,6 @@ class AuthenticatedSessionController extends Controller
      */
     public function destroy(Request $request): Response
     {
-        Auth::guard('web')->logout();
-
-        $request->session()->invalidate();
-
-        $request->session()->regenerateToken();
-
         return response()->noContent();
     }
 }
