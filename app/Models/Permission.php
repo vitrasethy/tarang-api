@@ -6,4 +6,5 @@ use Illuminate\Database\Eloquent\Model;
 
 class Permission extends Model
 {
+    public $fillable = ['fullname','acronym','description'];
 }
