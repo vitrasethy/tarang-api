@@ -23,7 +23,7 @@ class PermissionController extends Controller
         $validated = $request->validate([
             'fullname' => "required|string",
             'acronym' => 'required|string|max:12',
-            'description' => 'required|string'
+            'description' => 'required|string',
         ]);
         Permission::create($validated);
 
@@ -36,6 +36,7 @@ class PermissionController extends Controller
     public function show(string $id)
     {
         $specified = Permission::find($id);
+
         return response()->json($specified, 200);
     }
 
@@ -47,7 +48,7 @@ class PermissionController extends Controller
         $validated = $request->validate([
             'fullname' => "required|string",
             'acronym' => 'required|string|max:12',
-            'description' => 'required|string'
+            'description' => 'required|string',
         ]);
         $findrole = Permission::find($id);
         $findrole->update($validated);
