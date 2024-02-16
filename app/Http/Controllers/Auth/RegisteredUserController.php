@@ -36,10 +36,21 @@ class RegisteredUserController extends Controller
 
         Auth::login($user);
 
-        $token = $request->user()->createToken('token-name', ['*'], now()->addWeek());
+        $token = $request->user()->createToken('token-name')->accessToken;
 
         return response()->json([
-            'token' => $token->plainTextToken
+            'token' => $token,
         ]);
+        /**
+         * $response = Http::asForm()->post('http://passport-app.test/oauth/token', [
+         * 'grant_type' => 'refresh_token',
+         * 'refresh_token' => 'the-refresh-token',
+         * 'client_id' => 2,
+         * 'client_secret' => 'bKjXy7X2P5hEpJZ4ZzU4Lql0O0wRrV9o9FA6UrdG',
+         * 'scope' => '',
+         * ]);
+         *
+         * return $response->json();
+         */
     }
 }
